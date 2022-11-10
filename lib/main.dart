@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my1stapp/SecondPage.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // initialRoute: '/',
+      // routes: {
+      //   '/':(context)=>MyHomePage(),
+      // },
       home: MyHomePage(),
     );
   }
@@ -25,6 +32,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   double height = 170;
   double weight = 58;
+  double bmi = 0;
+  void _bnmi() {
+    bmi= ((weight / (height * height)) * 10000);}
 
   void _dec() {
     setState(() {
@@ -64,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
               height: 80,
               width: 300,
-              color: Colors.purpleAccent,
+              color: Colors.purpleAccent[100],
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,6 +86,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     SizedBox(width: 8),
                     Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+    //                   IconButton(
+    //                       iconSize: 50,
+    //                       icon: const Icon(
+    //                     Icons.add,
+    //                 ),
+    //                       onPressed:(){
+    //                         setState(() {
+    //                           weight++;
+    //                         });
+    // },),
                       ElevatedButton(
                           child: Text("+", style: TextStyle(fontSize: 10)),
                           style: ButtonStyle(
@@ -98,6 +118,16 @@ class _MyHomePageState extends State<MyHomePage> {
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(width: 8),
+          //             IconButton(
+          //                 iconSize:50,
+          //                 icon: const Icon(
+          //                   Icons.add,
+          //                 ),
+          //                 onPressed:(){
+          //                   setState(() {
+          //                     weight--;
+          //                   });
+          // })
                       ElevatedButton(
                         child: Text("-", style: TextStyle(fontSize: 10)),
                         style: ButtonStyle(
@@ -138,6 +168,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
+            // GestureDetector(
+            //   onTap:() {
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => SecondPage()));
+            //   },
+            // ),
           Container(
               height: 80,
               width: 300,
@@ -146,10 +182,28 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      "BMI=${((weight / (height * height)) * 10000)}",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Navigator.pushNamed(context, '/second',arguments: Argument(bmi: bmi));
+                        _bnmi();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SecondPage(bmi:bmi)),
+                        ); //navigator.push
+                      },//onPressed
+                      child: Text('Calculate',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff000000),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5), // <-- Radius
+                        ),
+                      ),
                     ),
                   ])),
           Image.network(
